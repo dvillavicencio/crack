@@ -13,12 +13,14 @@ md5.o: md5.c
 # Add recipe to compile hashpass.o from hashpass.c below,
 # indented with a tab.
 hashpass.o: hashpass.c
-
+	clang -c hashpass.c sha256.c md5.c -g -Wall 
 
 hashes: hashpass
+	clang hashpass.o md5.o sha256.o -o hashpass -l crypto
 	./hashpass rockyou100.txt hashes.txt
 
 wordhashes: hashpass
+	clang hashpass.o md5.o sha256.o -o hashpass -l crypto
 	./hashpass words.txt wordhashes.txt
 
 check: hashpass
